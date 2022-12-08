@@ -1,10 +1,11 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import MovieCard from './movieCard';
-
+import './App.css'
 
 const App = () => {
 
+    // runs once when page loads
     const [movies, setMovies] = useState([]);
     
     const [search, setSearch] = useState('')
@@ -14,31 +15,31 @@ const App = () => {
     const searchMovies = async(title) => {
         const response = await fetch(`${apiUrl}&s=${title}`)
         const data = await response.json()
-
+        console.log(`Searching ${title}....`)
         setMovies(data.Search)
     }
-
-    const buildMovies = 
-    // runs once when page loads
     useEffect(() => {
-        searchMovies('spiderman')
+        const apiUrl = `http://www.omdbapi.com/?i=tt3896198&apikey=ce4e0527`
+        const searchMovies = async(title) => {
+            const response = await fetch(`${apiUrl}&s=${title}`)
+            const data = await response.json()
+    
+            setMovies(data.Search)
+        }
+
+        const randMovies = ['Spider man', 'Batman', 'Hunger Games', 'Breaking Bad', 'Thor', 'Iron Man', 'Superman']
+        let randI = Math.floor(Math.random()*randMovies.length)
+        
+        searchMovies(randMovies[randI])
     }, [])
 
 
-    const movieTest = {
-        "Title": "Amazing Spiderman Syndrome",
-        "Year": "2012",
-        "imdbID": "tt2586634",
-        "Type": "movie",
-        "Poster": "N/A"
-    }
-
     return (
         <div className="App">
-            <h1>Movies search</h1>
+            <h1>Movies search react</h1>
 
             <div className='search'>
-                <input placeholder='title' value={search} onChange={(e) => setSearch(e.target.value)} />
+                <input placeholder='Movie Title' value={search} onChange={(e) => setSearch(e.target.value)} />
                 <button onClick={() => searchMovies(search)}>Search</button>
             </div>
 
@@ -47,12 +48,14 @@ const App = () => {
                 ?(
                     <div className='cont'>
                         {movies.map((movie) => (
-                            <MovieCard movieinfo={movie}/>
+                          
+                            <MovieCard movieinfo={movie} key={movie.Title}/>
+                          
                         ))}
                     </div>
                 ) : (
                     <div className='empty'>
-                        <h2>No movies</h2>
+                        <h2>No matches... sorry -Gage Lieble</h2>
                     </div>
                 )
             }

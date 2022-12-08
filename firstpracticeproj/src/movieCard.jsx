@@ -5,9 +5,13 @@ const MovieCard = ({ movieinfo }) => {
     return (
         <div className='movie'>
             <p>{movieinfo.Year}</p>
-            <img src={movieinfo.Poster != 'N/A' ? movieinfo.Poster: 'https://via.placeholder.com/400'} />
-            <span>{movieinfo.Type}</span>
-            <span>{movieinfo.Title}</span>
+            <div id="image-cont">
+                <img src={movieinfo.Poster !== 'N/A' ? movieinfo.Poster: 'https://via.placeholder.com/300x424'} alt="movie-poster" />
+            </div>
+            <div id="card-chin">
+            <span>Type: {movieinfo.Type}</span>
+            <span>Title: {movieinfo.Title}</span>
+            </div>
         </div>
     )
 }
